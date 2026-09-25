@@ -1,0 +1,44 @@
+[
+  {
+    "event_id": "evt-07-001",
+    "event_type": "package.uploaded",
+    "aggregate_id": "case-07-001",
+    "occurred_at": "2026-09-25T09:00:00+08:00",
+    "actor_id": "operator-01"
+  },
+  {
+    "event_id": "evt-07-002",
+    "event_type": "manifest.verified",
+    "aggregate_id": "case-07-001",
+    "occurred_at": "2026-09-25T10:00:00+08:00",
+    "actor_id": "reviewer-02"
+  },
+  {
+    "event_id": "evt-07-003",
+    "event_type": "capability.changed",
+    "aggregate_id": "case-07-001",
+    "occurred_at": "2026-09-25T11:00:00+08:00",
+    "actor_id": "operator-01"
+  },
+  {
+    "event_id": "evt-07-004",
+    "event_type": "review.signed",
+    "aggregate_id": "case-07-001",
+    "occurred_at": "2026-09-25T12:00:00+08:00",
+    "actor_id": "reviewer-02"
+  },
+  {
+    "event_id": "evt-07-005",
+    "event_type": "version.approved",
+    "aggregate_id": "case-07-001",
+    "occurred_at": "2026-09-25T13:00:00+08:00",
+    "actor_id": "operator-01"
+  },
+  {
+    "event_id": "evt-07-006",
+    "event_type": "rollout.started",
+    "aggregate_id": "case-07-001",
+    "occurred_at": "2026-09-25T14:00:00+08:00",
+    "actor_id": "reviewer-02"
+  }
+]

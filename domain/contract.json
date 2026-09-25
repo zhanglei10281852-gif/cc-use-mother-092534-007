@@ -1,0 +1,42 @@
+{
+  "project": "技能包供应链登记处",
+  "entities": [
+    "skill_package",
+    "package_version",
+    "file_manifest",
+    "capability_set",
+    "review",
+    "tenant_assignment",
+    "rollout_batch"
+  ],
+  "states": [
+    "uploaded",
+    "scanning",
+    "reviewing",
+    "approved",
+    "rejected",
+    "rolling_out",
+    "frozen",
+    "rolled_back",
+    "retired"
+  ],
+  "event_types": [
+    "package.uploaded",
+    "manifest.verified",
+    "capability.changed",
+    "review.signed",
+    "version.approved",
+    "rollout.started",
+    "rollout.frozen",
+    "version.rolled_back"
+  ],
+  "time_policy": "ISO 8601 with timezone",
+  "identifier_policy": "同一租户和对象类型内业务标识唯一",
+  "version_policy": "已发布规则与事实通过新版本追加，不覆盖历史",
+  "rules": [
+    "正式版本由内容摘要、依赖与能力集合共同唯一确定",
+    "能力扩大必须重新经过对应风险审批",
+    "灰度分组规则在批次开始后不可变化",
+    "回滚必须保留历史安装清单和影响任务"
+  ]
+}

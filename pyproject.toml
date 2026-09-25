@@ -1,0 +1,9 @@
+[project]
+name = "ccusr-skill-registry"
+version = "0.1.0"
+description = "技能包清单、能力声明、审查签署、隔离和回滚的领域资料"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.unittest]
+start-directory = "tests"
