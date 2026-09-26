@@ -1,0 +1,34 @@
+{
+  "plan_order": ["free", "pro", "enterprise"],
+  "rules": [
+    {
+      "capability": "mail.read",
+      "stages": ["code_review"],
+      "min_plan": "free"
+    },
+    {
+      "capability": "mail.write",
+      "stages": ["code_review", "data_owner"],
+      "min_plan": "pro",
+      "conflict_group": "mailbox"
+    },
+    {
+      "capability": "payment.read",
+      "stages": ["code_review", "finance"],
+      "min_plan": "pro"
+    },
+    {
+      "capability": "payment",
+      "stages": ["code_review", "data_owner", "finance"],
+      "min_plan": "enterprise",
+      "conflict_group": "payment-provider",
+      "allowed_regions": ["CN", "SG", "US"]
+    },
+    {
+      "capability": "home.device",
+      "stages": ["code_review", "data_owner"],
+      "min_plan": "pro",
+      "conflict_group": "home-control"
+    }
+  ]
+}

@@ -15,7 +15,7 @@
   },
   {
     "event_id": "evt-07-003",
-    "event_type": "capability.changed",
+    "event_type": "review.opened",
     "aggregate_id": "case-07-001",
     "occurred_at": "2026-09-25T11:00:00+08:00",
     "actor_id": "operator-01"
@@ -40,5 +40,19 @@
     "aggregate_id": "case-07-001",
     "occurred_at": "2026-09-25T14:00:00+08:00",
     "actor_id": "reviewer-02"
+  },
+  {
+    "event_id": "evt-07-007",
+    "event_type": "rollout.frozen",
+    "aggregate_id": "case-07-001",
+    "occurred_at": "2026-09-25T15:00:00+08:00",
+    "actor_id": "monitor-01"
+  },
+  {
+    "event_id": "evt-07-008",
+    "event_type": "version.rolled_back",
+    "aggregate_id": "case-07-001",
+    "occurred_at": "2026-09-25T16:00:00+08:00",
+    "actor_id": "operator-01"
   }
 ]
