@@ -16,7 +16,8 @@ def load_json(relative_path: str):
 def validate() -> tuple[int, int, int]:
     contract = load_json("domain/contract.json")
     events = load_json("examples/events.json")
-    policies = load_json("domain/policies.json")
+    policy_book = load_json("domain/policies.json")
+    policies = policy_book.get("policies", policy_book if isinstance(policy_book, list) else [])
     required = {"project", "entities", "states", "event_types", "time_policy", "rules"}
     missing = sorted(required - set(contract))
     if missing:
@@ -26,6 +27,12 @@ def validate() -> tuple[int, int, int]:
     allowed = set(contract["event_types"])
     if not isinstance(policies, list) or len(policies) < 3:
         raise ValueError("策略资料至少需要三项")
+    risk_levels = policy_book.get("risk_levels", [])
+    if not risk_levels:
+        raise ValueError("策略资料缺少风险等级路由")
+    for level in risk_levels:
+        if not level.get("approvers"):
+            raise ValueError(f"风险等级 {level.get('code')} 缺少审批角色")
     connection = sqlite3.connect(":memory:")
     connection.execute(
         "create table event_log(event_id text primary key, event_type text not null, "
@@ -49,7 +56,6 @@ def validate() -> tuple[int, int, int]:
     stored = connection.execute("select count(*) from event_log").fetchone()[0]
     connection.close()
     return len(contract["entities"]), stored, len(policies)
-
 
 if __name__ == "__main__":
     entity_count, event_count, policy_count = validate()

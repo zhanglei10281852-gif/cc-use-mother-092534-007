@@ -1,22 +1,78 @@
-[
-  {
-    "code": "P-07-01",
-    "name": "版本绑定",
-    "description": "正式版本由内容摘要、依赖与能力集合共同唯一确定"
+{
+  "risk_levels": [
+    {
+      "code": "low",
+      "capabilities": ["fs.read", "calendar.read", "contacts.read"],
+      "approvers": ["code_review"]
+    },
+    {
+      "code": "elevated",
+      "capabilities": ["mail.read", "mail.send", "fs.write", "device.home.control"],
+      "approvers": ["code_review", "data_owner"]
+    },
+    {
+      "code": "critical",
+      "capabilities": ["payment.execute", "payment.read", "device.home.unlock"],
+      "approvers": ["code_review", "data_owner", "finance"]
+    }
+  ],
+  "conflicting_capability_groups": [
+    ["mail.send", "mail.read"],
+    ["payment.execute", "payment.read"],
+    ["device.home.control", "device.home.unlock"]
+  ],
+  "capability_scopes": {
+    "mail.read": "tenant",
+    "mail.send": "tenant",
+    "payment.execute": "global",
+    "payment.read": "global",
+    "device.home.control": "region",
+    "device.home.unlock": "region",
+    "fs.read": "tenant",
+    "fs.write": "tenant",
+    "calendar.read": "tenant",
+    "contacts.read": "tenant"
   },
-  {
-    "code": "P-07-02",
-    "name": "并发边界",
-    "description": "能力扩大必须重新经过对应风险审批"
+  "capability_regions": {
+    "device.home.control": ["cn-north", "cn-east", "eu-central"],
+    "device.home.unlock": ["cn-north", "cn-east", "eu-central"]
   },
-  {
-    "code": "P-07-03",
-    "name": "恢复约束",
-    "description": "灰度分组规则在批次开始后不可变化"
+  "plans": {
+    "free": {"allowed_capabilities": ["fs.read", "calendar.read", "contacts.read"]},
+    "pro": {"allowed_capabilities": ["*"]},
+    "enterprise": {"allowed_capabilities": ["*"]}
   },
-  {
-    "code": "P-07-04",
-    "name": "审计结果",
-    "description": "回滚必须保留历史安装清单和影响任务"
-  }
-]
+  "rollout": {
+    "default_strategy": "modulo",
+    "default_groups": [
+      {"name": "canary", "size": 10},
+      {"name": "early", "size": 40},
+      {"name": "general", "size": 50}
+    ],
+    "default_anomaly_rate_threshold": 0.05,
+    "default_min_samples": 20,
+    "salt": "registry-default-salt"
+  },
+  "policies": [
+    {
+      "code": "P-07-01",
+      "name": "版本绑定",
+      "description": "正式版本由内容摘要、依赖与能力集合共同唯一确定"
+    },
+    {
+      "code": "P-07-02",
+      "name": "并发边界",
+      "description": "能力扩大必须重新经过对应风险审批"
+    },
+    {
+      "code": "P-07-03",
+      "name": "恢复约束",
+      "description": "灰度分组规则在批次开始后不可变化"
+    },
+    {
+      "code": "P-07-04",
+      "name": "审计结果",
+      "description": "回滚必须保留历史安装清单和影响任务"
+    }
+  ]
+}

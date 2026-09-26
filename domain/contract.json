@@ -6,8 +6,13 @@
     "file_manifest",
     "capability_set",
     "review",
+    "signature",
+    "tenant",
     "tenant_assignment",
-    "rollout_batch"
+    "install_record",
+    "task_instance",
+    "rollout_batch",
+    "event_log"
   ],
   "states": [
     "uploaded",
@@ -15,28 +20,44 @@
     "reviewing",
     "approved",
     "rejected",
+    "duplicate",
     "rolling_out",
     "frozen",
+    "isolated",
     "rolled_back",
     "retired"
   ],
   "event_types": [
+    "package.registered",
     "package.uploaded",
     "manifest.verified",
     "capability.changed",
+    "review.routed",
     "review.signed",
+    "review.rejected",
     "version.approved",
+    "version.frozen",
+    "version.isolated",
+    "version.rolled_back",
+    "skill.enabled",
+    "skill.disabled",
+    "install.drift_detected",
     "rollout.started",
     "rollout.frozen",
-    "version.rolled_back"
+    "rollback.started",
+    "rollback.completed"
   ],
   "time_policy": "ISO 8601 with timezone",
   "identifier_policy": "同一租户和对象类型内业务标识唯一",
   "version_policy": "已发布规则与事实通过新版本追加，不覆盖历史",
+  "signature_policy": "签署载荷只包含候选版本、内容摘要、能力集合摘要、路由与签署人；内容或依赖漂移后核验失败，签署不得随新版本携带",
   "rules": [
-    "正式版本由内容摘要、依赖与能力集合共同唯一确定",
-    "能力扩大必须重新经过对应风险审批",
-    "灰度分组规则在批次开始后不可变化",
-    "回滚必须保留历史安装清单和影响任务"
+    "正式版本由内容摘要、依赖、入口点与能力集合共同唯一确定，重复上传返回同一候选版本",
+    "能力扩大必须重新经过对应风险审批：代码审查、数据所有者或财务审批",
+    "灰度分组规则（策略与盐值）在批次开始后冻结，任何修改被拒绝",
+    "异常率达到阈值后冻结新分配并回滚到最近的安全版本",
+    "隔离作用于单个版本：停止其灰度分配，保留受影响任务与历史安装清单",
+    "并发上传与并发审批通过唯一约束和即时事务串行化，正式版本号无重复无空缺",
+    "进行中的审查与回滚批次全部持久化，进程重启后可继续签署和继续回滚"
   ]
 }
